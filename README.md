@@ -13,9 +13,11 @@ We introduce a video dataset BBVD for Indonesian Sign Language task. BBVD datase
 ## Data Spliting
 Download the data first from google drive.
 In this repository, there are 2 types of data splitting:
-1. Split by number of samples
+1. <b>Signer Dependent (SD)</b>
+   <p>Trained and evaluated using data from the same set of signers. This approach is suitable for <b>early-stage research</b> or when the target user is known (e.g., personalized systems). However, it's limited for generalization task to unseen signers.</p>
    <p>The number of samples for each glosses are split to 70% train data and 30% test data, provided in the script using the metadata</p>
-2. Split by number of signers
+2. <b>Signer Independent (SI)</b>
+   <p>Trained on data from some signers and tested on data from completely different signers who were not seen during training to ensure <b>generalization</b> and <b>fairness</b> as it <b>simulates a more realistic scenario</b> where the model must recognize signs regardless of who is signing.</p>
    <p>The number of samples are split based on signers (4 signers for train data and 1 signer for test data), provided in the script using the metadata</p>
 
 Then run [organize_dataset.py](https://github.com/AceKinnn/BBVD/blob/main/organize_dataset.py) using the respective metadata to split the video to train and test folder, with the following command:

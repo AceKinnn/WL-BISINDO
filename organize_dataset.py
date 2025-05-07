@@ -19,7 +19,7 @@ def organize_dataset(metadata_path, source_dir, output_dir):
     for class_info in metadata:
         label = class_info['label']
         for instance in class_info['instances']:
-            video_id = instance['video_id']
+            video_id = f"{instance['video_id']}.mp4"
             split = instance['split']
 
             src_path = os.path.join(source_dir, video_id)
