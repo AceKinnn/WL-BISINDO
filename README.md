@@ -6,7 +6,7 @@ We introduce a video dataset BBVD for Indonesian Sign Language task. BBVD datase
 Download the data first from google drive.
 In this repository, there are 2 types of data splitting:
 1. Split by number of samples
-   The number of samples for each glosses are split to 70% train data and 30% test data, provided in the script using the metadata
+   <p>The number of samples for each glosses are split to 70% train data and 30% test data, provided in the script using the metadata</p>
 2. Split by number of signers
    The number of samples are split based on signers (4 signers for train data and 1 signer for test data), provided in the script using the metadata
 
