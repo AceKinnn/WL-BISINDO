@@ -1,0 +1,116 @@
+import uuid
+
+import torch
+import torch.nn.functional as F
+from torch import Tensor, nn
+
+from typing import Optional, Union, Callable
+
+isChecked = False
+
+
+class PBEEDecoder(nn.TransformerDecoder):
+    __constants__ = ['norm']
+
+    def __init__(self, decoder_layer, num_layers, norm=None, patient=1, inner_classifiers_config=None):
+        super(PBEEDecoder, self).__init__(decoder_layer, num_layers, norm)
+        self.patience = patient
+        self.inner_classifiers = nn.ModuleList(
+            [nn.Linear(inner_classifiers_config[0], inner_classifiers_config[1])
+             for _ in range(num_layers)])
+
+    def forward(self, tgt: Tensor, memory: Tensor, tgt_mask: Optional[Tensor] = None,
+                memory_mask: Optional[Tensor] = None, tgt_key_padding_mask: Optional[Tensor] = None,
+                memory_key_padding_mask: Optional[Tensor] = None, tgt_is_causal: Optional[bool] = None,
+                memory_is_causal: bool = False, training=True) -> Tensor:
+
+        output = tgt
+        id = uuid.uuid1()
+
+        if training or self.patience == 0:
+            for i, mod in enumerate(self.layers):
+                output = mod(output, memory, tgt_mask=tgt_mask,
+                             memory_mask=memory_mask,
+                             tgt_key_padding_mask=tgt_key_padding_mask,
+                             memory_key_padding_mask=memory_key_padding_mask)
+                # mod_output = output
+                # if self.norm is not None:
+                #     mod_output = self.norm(mod_output)
+                # _ = self.inner_classifiers[i](mod_output).squeeze()
+        else:
+            patient_counter = 0
+            patient_result = None
+            calculated_layer_num = 0
+            for i, mod in enumerate(self.layers):
+                calculated_layer_num += 1
+                output = mod(output, memory, tgt_mask=tgt_mask,
+                             memory_mask=memory_mask,
+                             tgt_key_padding_mask=tgt_key_padding_mask,
+                             memory_key_padding_mask=memory_key_padding_mask)
+
+                mod_output = output
+                if self.norm is not None:
+                    mod_output = self.norm(mod_output)
+                classifier_out = self.inner_classifiers[i](mod_output).squeeze().unsqueeze(0)
+                classifier_out = classifier_out.expand(1, -1, -1)
+                # labels = classifier_out.detach().argmax(dim=1)
+                # _, labels = torch.max(F.softmax(classifier_out, dim=1), 1)
+                label = int(torch.argmax(torch.nn.functional.softmax(classifier_out, dim=2)))
+
+                if patient_result is not None:
+                    # patient_out = patient_result.detach().argmax(dim=1)
+                    # _, patient_labels = torch.max(F.softmax(patient_out, dim=1), 1)
+                    patient_label = int(torch.argmax(torch.nn.functional.softmax(patient_result, dim=2)))
+
+                if (patient_result is not None) and (patient_label == label): #torch.all(label.eq(patient_label)):
+                    patient_counter += 1
+                else:
+                    patient_counter = 0
+
+                patient_result = classifier_out
+                if patient_counter == self.patience:
+                    # print("break")
+                    break
+
+        if self.norm is not None:
+            output = self.norm(output)
+
+        return output
+
+
+class DecoderLayer(nn.TransformerDecoderLayer):
+    """
+    Edited TransformerDecoderLayer implementation omitting the redundant self-attention operation as opposed to the
+    standard implementation.
+    """
+
+    def __init__(self, d_model: int, nhead: int, dim_feedforward: int = 2048, dropout: float = 0.1,
+                 activation: Union[str, Callable[[Tensor], Tensor]] = F.relu):
+        super(DecoderLayer, self).__init__(d_model, nhead, dim_feedforward, dropout, activation)
+        # Change self.multihead_attn to use Pro-sparse attention
+        print('Using custom DecoderLayer')
+
+    def forward(self, tgt: torch.Tensor, memory: torch.Tensor, tgt_mask: Optional[torch.Tensor] = None,
+                memory_mask: Optional[torch.Tensor] = None, tgt_key_padding_mask: Optional[torch.Tensor] = None,
+                memory_key_padding_mask: Optional[torch.Tensor] = None, tgt_is_causal: Optional[bool] = False,
+                memory_is_causal: Optional[bool] = False) -> torch.Tensor:
+        global isChecked
+        if not isChecked:
+            isChecked = True
+
+        tgt = tgt + self.dropout1(tgt)
+        tgt = self.norm1(tgt)
+        tgt2 = self.multihead_attn(tgt, memory, memory, attn_mask=memory_mask,
+                                   key_padding_mask=memory_key_padding_mask)[0]
+        tgt = tgt + self.dropout2(tgt2)
+        tgt = self.norm2(tgt)
+        tgt2 = self.linear2(self.dropout(self.activation(self.linear1(tgt))))
+        tgt = tgt + self.dropout3(tgt2)
+        tgt = self.norm3(tgt)
+
+        return tgt
+
+#    The reference for the code is the PBEEDecoder class is the following
+#    Title: BERT Loses Patience: Fast and Robust Inference with Early Exit
+#    Author: Wangchunshu Zhou, Canwen Xu, Tao Ge, Julian McAuley, Ke Xu1, Furu Wei
+#    Availability: https://github.com/JetRunner/PABEE
