@@ -13,40 +13,24 @@ We introduce a video dataset WL-BISINDO for Indonesian Sign Language task. WL-BI
 ## Download Data
 WL-BISINDO can be downloaded from [Kaggle](https://www.kaggle.com/datasets/glennleonali/bbvd-all-videos).
 
-| Label | Gloss           | English Translation |
-|-------|------------------|----------------------|
-| 0     | Air             | Water               |
-| 1     | Belajar         | Learn               |
-| 2     | Cari            | Search              |
-| 3     | Hari            | Day                 |
-| 4     | Ingat           | Remember            |
-| 5     | Lagi            | Again               |
-| 6     | Maaf            | Sorry               |
-| 7     | Makan           | Eat                 |
-| 8     | Motor           | Motorcycle          |
-| 9     | Saya            | I                   |
-| 10    | Terima kasih    | Thank you           |
-| 11    | Tuli            | Deaf                |
-| 12    | Apa             | What                |
-| 13    | Siapa           | Who                 |
-| 14    | Kapan           | When                |
-| 15    | Di mana         | Where               |
-| 16    | Mengapa         | Why                 |
-| 17    | Bagaimana       | How                 |
-| 18    | Merah           | Red                 |
-| 19    | Kuning          | Yellow              |
-| 20    | Hijau           | Green               |
-| 21    | Hitam           | Black               |
-| 22    | Dengar          | Hear                |
-| 23    | Berangkat       | Depart              |
-| 24    | Datang          | Come                |
-| 25    | Teman           | Friend              |
-| 26    | Keluarga        | Family              |
-| 27    | Rumah           | House               |
-| 28    | Pagi            | Morning             |
-| 29    | Siang           | Noon                |
-| 30    | Sore            | Afternoon           |
-| 31    | Malam           | Night               |
+| Label | Gloss           | English Translation | Label | Gloss           | English Translation |
+|-------|------------------|----------------------|-------|------------------|----------------------|
+| 0     | Air             | Water               | 16    | Mengapa         | Why                 |
+| 1     | Belajar         | Learn               | 17    | Bagaimana       | How                 |
+| 2     | Cari            | Search              | 18    | Merah           | Red                 |
+| 3     | Hari            | Day                 | 19    | Kuning          | Yellow              |
+| 4     | Ingat           | Remember            | 20    | Hijau           | Green               |
+| 5     | Lagi            | Again               | 21    | Hitam           | Black               |
+| 6     | Maaf            | Sorry               | 22    | Dengar          | Hear                |
+| 7     | Makan           | Eat                 | 23    | Berangkat       | Depart              |
+| 8     | Motor           | Motorcycle          | 24    | Datang          | Come                |
+| 9     | Saya            | I                   | 25    | Teman           | Friend              |
+| 10    | Terima kasih    | Thank you           | 26    | Keluarga        | Family              |
+| 11    | Tuli            | Deaf                | 27    | Rumah           | House               |
+| 12    | Apa             | What                | 28    | Pagi            | Morning             |
+| 13    | Siapa           | Who                 | 29    | Siang           | Noon                |
+| 14    | Kapan           | When                | 30    | Sore            | Afternoon           |
+| 15    | Di mana         | Where               | 31    | Malam           | Night               |
 
 
 ## Data Spliting
