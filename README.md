@@ -1,17 +1,17 @@
 <div align="center">
 <h1>
 <b>
-Banten BISINDO Video Dataset (BBVD): An Indonesian Sign Language Dataset and Baseline Methods
+Word-Level BISINDO: A Novel Video Indonesian Sign Language Dataset and Baseline Methods
 </b>
 </h1>
 </div>
 
 > by **[Grace Oktaviani Kindy](https://github.com/AceKinnn)** and **[Glenn Leonali](https://github.com/lenoel777)**, BINUS University<br>
 
-We introduce a video dataset BBVD for Indonesian Sign Language task. BBVD dataset size is about 2.16 GB, and it contains 1600 RGB videos for 32 sign language gestures from 5 singers, with each class containing 10 samples.
+We introduce a video dataset WL-BISINDO for Indonesian Sign Language task. WL-BISINDO dataset size is about 2.16 GB, and it contains 1600 RGB videos for 32 sign language gestures from 5 singers, with each class containing 10 samples.
 
 ## Download Data
-BBVD can be downloaded from [Kaggle](https://www.kaggle.com/datasets/glennleonali/bbvd-all-videos).
+WL-BISINDO can be downloaded from [Kaggle](https://www.kaggle.com/datasets/glennleonali/bbvd-all-videos).
 
 <div style="display: flex; gap: 20px;">
   <div style="flex: 1;">
