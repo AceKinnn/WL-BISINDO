@@ -11,7 +11,7 @@ Word-Level BISINDO: A Novel Video Indonesian Sign Language Dataset and Baseline 
 We introduce a video dataset WL-BISINDO for Indonesian Sign Language task. WL-BISINDO dataset size is about 2.16 GB, and it contains 1600 RGB videos for 32 sign language gestures from 5 singers, with each class containing 10 samples.
 
 ## Download Data
-WL-BISINDO can be downloaded from [Kaggle](https://www.kaggle.com/datasets/glennleonali/bbvd-all-videos).
+WL-BISINDO can be downloaded from [Kaggle](https://www.kaggle.com/datasets/glennleonali/wl-bisindo).
 
 | Label | Gloss           | English Translation | Label | Gloss           | English Translation |
 |-------|------------------|----------------------|-------|------------------|----------------------|
