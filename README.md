@@ -1,4 +1,4 @@
-# WL BISINDO
+# WL-BISINDO
 
 > **Authors**: [Grace Oktaviani Kindy](https://github.com/AceKinnn), [Glenn Leonali](https://github.com/lenoel777) & Henry Lucky, BINUS University  
 > **Paper**: [DOI:10.1016/j.procs.2025.08.277](https://doi.org/10.1016/j.procs.2025.08.277)
@@ -13,7 +13,7 @@ Our work aims to support research in **Indonesian Sign Language Recognition (SLR
 
 The WL-BISINDO dataset is publicly available on **Kaggle**:
 
-🔗 [Download WL-BISINDO on Kaggle](https://www.kaggle.com/datasets/glennleonali/bbvd-all-videos)
+🔗 [Download WL-BISINDO on Kaggle](https://www.kaggle.com/datasets/glennleonali/wl-bisindo)
 
 > **Note**: The dataset is approximately **2.16 GB** and contains 1,600 videos (32 glosses × 10 samples × 5 signers).
 
@@ -82,7 +82,7 @@ python organize_dataset.py --metadata data_structuring/SI_split_metadata.json --
 Preprocessing differs by model type. Outputs are saved in separate model-specific folders.
 
 ### 1. **Pose-Based Models (SPOTER & Siformer)**
-- Extract 2D skeletal keypoints using **Google Vision API** (alternatives: MediaPipe, OpenPose).
+- Extract 2D skeletal keypoints using **[Vision API](https://github.com/thanhdolong/sign-language-recognition-trainer)** (alternatives: MediaPipe, OpenPose).
 - Output: CSV files containing normalized pose sequences.
 - For **Siformer**, sequences are **zero-padded** to a fixed length (max frame count) to enable batch processing. Padding has minimal impact due to attention masking.
 
